@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bún Sao Mai - Hương Vị Biển Cả</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f2411e; /* Màu đỏ cam của banner */
+            --secondary: #ffb800; /* Màu vàng của chữ Bún Sao Mai */
+            --dark: #0f0f0f;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Lexend', sans-serif; scroll-behavior: smooth; }
+
+        body { background-color: var(--dark); color: #fff; overflow-x: hidden; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(15px);
+            z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--secondary); text-transform: uppercase; }
+        .logo span { color: var(--primary); }
+
+        nav ul { display: flex; list-style: none; gap: 35px; }
+        nav a { text-decoration: none; color: #ccc; font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        nav a:hover { color: var(--primary); }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                        url('https://i.imgur.com/your-upload-id.jpg'); /* Thay link ảnh banner của bạn vào đây nếu có */
+            background-size: cover; background-position: center; text-align: center;
+        }
+
+        .hero h1 { 
+            font-size: 5rem; color: var(--secondary); text-shadow: 0 0 20px rgba(255, 184, 0, 0.5);
+            margin-bottom: 10px; 
+        }
+
+        /* Menu Section */
+        .menu-container { padding: 100px 8%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: #fff; }
+        .section-title span { color: var(--primary); }
+
+        .menu-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
+        }
+
+        .menu-item {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px; padding: 20px; transition: 0.5s; position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-15px); border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(242, 65, 30, 0.2);
+        }
+
+        .menu-item img {
+            width: 100%; height: 220px; object-fit: cover; border-radius: 18px;
+            margin-bottom: 20px;
+        }
+
+        .menu-item h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--secondary); }
+        .menu-item p { color: #888; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; }
+
+        .price-row { display: flex; justify-content: space-between; align-items: center; }
+        .price { font-size: 1.4rem; font-weight: 700; color: #fff; }
+
+        .order-btn {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 20px; border-radius: 12px; font-weight: 600;
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .order-btn:hover { background: var(--secondary); color: var(--dark); }
+
+        footer { padding: 60px 8%; background: #0a0a0a; text-align: center; border-top: 1px solid #1a1a1a; }
+        
+        /* Nút Liên hệ Facebook */
+        .fb-btn {
+            display: inline-block; margin-top: 20px; color: #1877F2; 
+            text-decoration: none; font-weight: bold; border: 1px solid #1877F2;
+            padding: 10px 25px; border-radius: 50px; transition: 0.3s;
+        }
+        .fb-btn:hover { background: #1877F2; color: white; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BÚN SAO <span>MAI</span></div>
+        <ul>
+            <li><a href="#">Trang chủ</a></li>
+            <li><a href="#menu">Thực đơn</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61588461264138" target="_blank">Về chúng tôi</a></li>
+        </ul>
+        <div style="color: var(--secondary); font-weight: bold;">Hotline: 086.561.7979</div>
+    </nav>
+
+    <section class="hero">
+        <h1 data-aos="zoom-in">BÚN SAO MAI</h1>
+        <p data-aos="fade-up" style="letter-spacing: 5px; font-weight: 300;">HƯƠNG VỊ BIỂN CẢ</p>
+    </section>
+
+    <section class="menu-container" id="menu">
+        <h2 class="section-title" data-aos="fade-right">THỰC ĐƠN <span>TƯƠI NGON</span></h2>
+        
+        <div class="menu-grid">
+            <div class="menu-item" data-aos="fade-up">
+                <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=500" alt="Bún Hải Sản">
+                <h3>Bún Hải Sản Đặc Biệt</h3>
+                <p>Full topping tôm, mực, bề bề tươi rói cùng nước dùng bí truyền.</p>
+                <div class="price-row">
+                    <span class="price">45.000đ</span>
+                    <button class="order-btn">Chọn</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=500" alt="Bún Riêu">
+                <h3>Bún Riêu Cua</h3>
+                <p>Vị cua đồng ngọt thanh, gạch cua béo ngậy ăn kèm rau sống.</p>
+                <div class="price-row">
+                    <span class="price">35.000đ</span>
+                    <button class="order-btn">Chọn</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=500" alt="Bún Cá">
+                <h3>Bún Cá</h3>
+                <p>Cá chiên giòn rụm hoặc cá chần mềm ngọt, nước dùng chua cay nhẹ.</p>
+                <div class="price-row">
+                    <span class="price">35.000đ</span>
+                    <button class="order-btn">Chọn</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-aos="fade-up" data-aos-delay="300">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=500" alt="Bún Mọc">
+                <h3>Bún Mọc</h3>
+                <p>Mọc giòn thơm thịt, mộc nhĩ, thanh đạm và bổ dưỡng cho bữa sáng.</p>
+                <div class="price-row">
+                    <span class="price">30.000đ</span>
+                    <button class="order-btn">Chọn</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-aos="fade-up" data-aos-delay="400">
+                <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=500" alt="Lẩu">
+                <h3>Lẩu Hải Sản</h3>
+                <p>Món nhậu tuyệt vời cho nhóm bạn với đủ loại hải sản cao cấp.</p>
+                <div class="price-row">
+                    <span class="price">250.000đ</span>
+                    <button class="order-btn">Chọn</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Địa chỉ: Đường đôi, Khu đô thị Sao Mai, Thôn Ngọc Đà, Xã Thọ Phú, Thanh Hóa</p>
+        <p>Hotline đặt món: 086.561.7979 / 086.683.1279</p>
+        <a href="https://www.facebook.com/profile.php?id=61588461264138" class="fb-btn" target="_blank">Ghé thăm Fanpage của quán</a>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: false });
+    </script>
+</body>
+</html>
