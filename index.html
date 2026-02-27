@@ -3,256 +3,655 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bún Sao Mai - Hương Vị Biển Cả</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>SAO MAI SEAFOOD | THỰC ĐƠN ĐỒNG NHẤT</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
+        /* =========================================
+           1. CSS VARIABLES (HỆ THỐNG BIẾN SỐ)
+           ========================================= 
+        */
         :root {
-            --primary: #f2411e;    /* Màu đỏ cam từ banner */
-            --secondary: #ffb800;  /* Màu vàng nắng */
-            --bg-light: #ffffff;   /* Trắng tinh khôi */
-            --bg-accent: #fff9f5;  /* Cam nhạt cực nhẹ cho nền */
-            --text-main: #2d2d2d;  /* Xám đậm dễ đọc */
-            --text-muted: #666;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --primary-color: #e63946;
+            --primary-hover: #c12e3a;
+            --dark-color: #1a1a1a;
+            --light-color: #ffffff;
+            --gray-light: #f8f9fa;
+            --gray-medium: #eeeeee;
+            --gray-text: #666666;
+            --fb-brand: #1877F2;
+            --radius-bento: 45px;
+            --radius-button: 100px;
+            --shadow-subtle: 0 10px 30px rgba(0,0,0,0.05);
+            --shadow-bold: 0 20px 50px rgba(0,0,0,0.15);
+            --transition-main: all 0.7s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* =========================================
+           2. GLOBAL RESET (THIẾT LẬP CHUNG)
+           ========================================= 
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-main); 
-            line-height: 1.6;
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
 
-        /* Navigation */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 15px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        /* =========================================
+           3. SỬA LỖI VÒNG TRÒN OVAL (FIXED)
+           ========================================= 
+        */
+        .floating-nav {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 9999;
+        }
+
+        .float-btn {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%; /* Luôn là 50% để giữ hình tròn */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-bold);
+            transition: transform 0.3s ease;
+            position: relative;
+            background-color: white;
+        }
+
+        .float-fb {
+            background-color: var(--fb-brand);
+        }
+
+        .float-phone {
+            background-color: var(--primary-color);
+        }
+
+        /* Vòng đỏ xung quanh - Cam kết không bị oval */
+        .float-phone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            animation: pulse-ring 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        .float-btn:hover {
+            transform: translateY(-10px);
+        }
+
+        /* =========================================
+           4. HEADER & NAVIGATION
+           ========================================= 
+        */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 20px var(--shadow);
+            padding: 35px 0;
+            transition: all 0.4s ease;
         }
 
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
-        .logo span { color: var(--secondary); }
-
-        nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
-        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: 0.3s; font-size: 0.95rem; }
-        nav a:hover { color: var(--primary); }
-
-        .nav-right { display: flex; gap: 15px; align-items: center; }
-
-        /* Google Maps Button */
-        .btn-maps {
-            background: #4285F4; color: white !important; padding: 8px 15px; 
-            border-radius: 50px; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
-        }
-        .btn-maps img { width: 18px; }
-        .btn-maps:hover { transform: translateY(-2px); background: #3367d6 !important; }
-
-        .hotline-box {
-            color: var(--primary); font-weight: bold; border: 2px solid var(--primary); 
-            padding: 6px 15px; border-radius: 50px; white-space: nowrap;
+        header.scrolled {
+            padding: 15px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-medium);
         }
 
-        /* Hero Section */
-        .hero {
-            height: 75vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
-                        url('https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=2000');
-            background-size: cover; background-position: center;
-            text-align: center; padding: 0 20px; margin-top: 60px;
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .hero h1 { 
-            font-size: clamp(2.5rem, 8vw, 4.5rem); color: var(--primary); 
-            text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
-            margin-bottom: 10px; text-transform: uppercase;
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: var(--dark-color);
         }
 
-        .hero p { font-size: 1.1rem; font-weight: 600; letter-spacing: 4px; color: var(--text-main); }
-
-        /* Menu Section */
-        .menu-container { padding: 80px 8%; background-color: var(--bg-accent); }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--primary); }
-        .section-title span { color: var(--text-main); }
-
-        .menu-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px;
+        .logo span {
+            color: var(--primary-color);
         }
 
-        .menu-item {
-            background: #ffffff;
-            border-radius: 25px; padding: 15px;
-            box-shadow: 0 10px 30px var(--shadow);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column;
+        .menu-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
         }
 
-        .menu-item:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 15px 40px rgba(242, 65, 30, 0.15);
+        .menu-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
         }
 
-        .menu-item img {
-            width: 100%; height: 230px; object-fit: cover; border-radius: 20px;
+        .menu-links a:hover {
+            color: var(--primary-color);
         }
 
-        .menu-item h3 { color: var(--primary); margin: 15px 0 5px 0; font-size: 1.4rem; }
-        .menu-item p { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; margin-bottom: 15px; }
-
-        .price-row { 
-            display: flex; justify-content: space-between; 
-            align-items: center; padding-top: 15px; border-top: 1px dashed #eee;
+        /* =========================================
+           5. HERO - CÂU CHUYỆN THANH HÓA
+           ========================================= 
+        */
+        .hero-section {
+            padding: 220px 0 100px;
+            text-align: center;
+            background: radial-gradient(circle at center, #ffffff 0%, #fdfdfd 100%);
         }
 
-        .price { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
-
-        .order-btn {
-            background: var(--primary); color: white; border: none;
-            padding: 10px 20px; border-radius: 12px; font-weight: 700;
-            cursor: pointer; transition: 0.3s;
+        .hero-label {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: rgba(230, 57, 70, 0.1);
+            color: var(--primary-color);
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 35px;
         }
 
-        .order-btn:hover { background: var(--secondary); transform: scale(1.05); }
-
-        /* Footer */
-        footer { 
-            padding: 60px 8%; background: #fff; 
-            text-align: center; border-top: 1px solid #eee; 
+        .hero-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            line-height: 0.95;
+            letter-spacing: -4px;
+            margin-bottom: 40px;
         }
 
-        .contact-info { margin: 20px 0; font-weight: 600; color: var(--text-main); line-height: 2; }
-        .contact-info span { color: var(--primary); }
-        
-        .fb-link {
-            display: inline-block; padding: 12px 30px; border-radius: 50px;
-            background: #1877F2; color: white !important; text-decoration: none;
-            font-weight: bold; transition: 0.3s; margin-top: 15px;
+        .hero-section p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--gray-text);
+            font-size: 1.3rem;
+            font-weight: 400;
         }
-        .fb-link:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4); }
 
-        /* Mobile Responsive */
+        /* =========================================
+           6. BENTO GRID - THỰC ĐƠN ĐỒNG BỘ
+           ========================================= 
+        */
+        .bento-container {
+            padding-bottom: 150px;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 320px;
+            gap: 25px;
+        }
+
+        .bento-item {
+            background-color: var(--gray-light);
+            border-radius: var(--radius-bento);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 45px;
+            cursor: pointer;
+            transition: var(--transition-main);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        /* Kích thước ô */
+        .grid-2x2 { grid-column: span 2; grid-row: span 2; }
+        .grid-2x1 { grid-column: span 2; }
+        .grid-1x2 { grid-row: span 2; }
+
+        /* Media / Image Layer */
+        .item-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-main);
+            filter: brightness(0.85);
+        }
+
+        .bento-item:hover .item-image img {
+            transform: scale(1.1);
+            filter: brightness(0.65);
+        }
+
+        /* Content Layer */
+        .item-info {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .item-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .item-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .item-desc {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .bento-item:hover .item-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hiệu ứng Focus Tiktok */
+        .bento-grid:has(.bento-item:hover) .bento-item:not(:hover) {
+            filter: blur(12px) grayscale(0.5);
+            opacity: 0.4;
+            transform: scale(0.97);
+        }
+
+        /* =========================================
+           7. MODAL SYSTEM
+           ========================================= 
+        */
+        .dish-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.96);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-card {
+            background-color: white;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 50px;
+            padding: 70px;
+            position: relative;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        .dish-modal.is-active { display: flex; }
+        .dish-modal.is-active .modal-card { transform: translateY(0); opacity: 1; }
+
+        .modal-close {
+            position: absolute;
+            top: 40px;
+            right: 45px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #ddd;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover { color: var(--primary-color); }
+
+        /* =========================================
+           8. FOOTER - THANH HÓA INFO
+           ========================================= 
+        */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 120px 0 60px;
+            border-radius: 80px 80px 0 0;
+        }
+
+        .footer-wrap {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 100px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-brand p {
+            color: #777;
+            max-width: 400px;
+        }
+
+        .footer-heading {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--primary-color);
+            margin-bottom: 35px;
+            font-weight: 800;
+        }
+
+        .footer-contact-list {
+            list-style: none;
+        }
+
+        .footer-contact-list li {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 25px;
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .footer-contact-list i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-top: 4px;
+        }
+
+        .footer-bottom {
+            margin-top: 100px;
+            padding-top: 40px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        /* =========================================
+           9. RESPONSIVE QUERIES
+           ========================================= 
+        */
+        @media (max-width: 1200px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-wrap { grid-template-columns: 1fr 1fr; gap: 60px; }
+        }
+
         @media (max-width: 768px) {
-            nav { padding: 10px 5%; flex-direction: column; gap: 10px; }
-            nav ul { display: none; } /* Ẩn bớt menu trên mobile cho gọn */
-            .hero { height: 60vh; }
-            .hero h1 { font-size: 2.5rem; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .grid-2x2, .grid-2x1, .grid-1x2 { grid-column: span 1; grid-row: span 1; height: 380px; }
+            .menu-links { display: none; }
+            .hero-section h1 { font-size: 4rem; }
+            .footer-wrap { grid-template-columns: 1fr; }
+            .modal-card { padding: 40px; border-radius: 30px; }
         }
+
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">BÚN SAO <span>MAI</span></div>
-        <ul>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#menu">Thực đơn</a></li>
-            <li><a href="https://www.facebook.com/profile.php?id=61588461264138" target="_blank">Facebook</a></li>
-        </ul>
-        
-        <div class="nav-right">
-            <a href="https://maps.app.goo.gl/2Z5Wgntjmshs71iB8" target="_blank" class="btn-maps">
-                <img src="https://www.gstatic.com/images/branding/product/1x/maps_96dp.png" alt="Maps">
-                Bản đồ
-            </a>
-            <div class="hotline-box">086.561.7979</div>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <h1 data-aos="zoom-out">BÚN SAO MAI</h1>
-        <p data-aos="fade-up" data-aos-delay="300">HƯƠNG VỊ BIỂN CẢ - TƯƠI NGON MỖI NGÀY</p>
-    </section>
-
-    <section class="menu-container" id="menu">
-        <h2 class="section-title" data-aos="fade-down">THỰC ĐƠN <span>CHÍNH</span></h2>
-        
-        <div class="menu-grid">
-            <div class="menu-item" data-aos="fade-up">
-                <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=500" alt="Bún Hải Sản">
-                <h3>Bún Hải Sản Đặc Biệt</h3>
-                <p>Tôm, mực, bề bề tươi sống hòa quyện cùng nước dùng thanh ngọt đặc trưng.</p>
-                <div class="price-row">
-                    <span class="price">45.000đ</span>
-                    <button class="order-btn">Chọn món</button>
-                </div>
-            </div>
-
-            <div class="menu-item" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=500" alt="Bún Riêu">
-                <h3>Bún Riêu Cua</h3>
-                <p>Cua đồng xay nguyên chất, gạch cua béo ngậy, ăn kèm rau sống tươi ngon.</p>
-                <div class="price-row">
-                    <span class="price">35.000đ</span>
-                    <button class="order-btn">Chọn món</button>
-                </div>
-            </div>
-
-            <div class="menu-item" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=500" alt="Bún Cá">
-                <h3>Bún Cá Giòn</h3>
-                <p>Cá phi lê chiên vàng ươm, giòn tan bên ngoài, mềm ngọt bên trong.</p>
-                <div class="price-row">
-                    <span class="price">35.000đ</span>
-                    <button class="order-btn">Chọn món</button>
-                </div>
-            </div>
-
-            <div class="menu-item" data-aos="fade-up" data-aos-delay="300">
-                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=500" alt="Bún Mọc">
-                <h3>Bún Mọc Thịt</h3>
-                <p>Mọc viên nấm hương giòn sần sật, nước dùng xương hầm trong vắt.</p>
-                <div class="price-row">
-                    <span class="price">30.000đ</span>
-                    <button class="order-btn">Chọn món</button>
-                </div>
-            </div>
-
-            <div class="menu-item" data-aos="fade-up" data-aos-delay="400">
-                <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=500" alt="Lẩu">
-                <h3>Lẩu Hải Sản</h3>
-                <p>Phù hợp cho gia đình và nhóm bạn, hải sản đầy đặn, tươi rói.</p>
-                <div class="price-row">
-                    <span class="price">250.000đ</span>
-                    <button class="order-btn">Chọn món</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="contact-info" data-aos="fade-in">
-            <p>📍 Địa chỉ: <span>Đường đôi, Khu đô thị Sao Mai, Thôn Ngọc Đà, Xã Thọ Phú, Thanh Hóa</span> (Hải sản tươi mỗi ngày)</p>
-            <p>📞 Hotline đặt món: <span>086.561.7979</span> hoặc <span>086.683.1279</span></p>
-        </div>
-        <a href="https://www.facebook.com/profile.php?id=61588461264138" class="fb-link" target="_blank">
-            Ghé thăm Facebook chúng tôi
+    <div class="floating-nav">
+        <a href="https://www.facebook.com/profile.php?id=61588461264138" target="_blank" class="float-btn float-fb">
+            <i class="fab fa-facebook-f"></i>
         </a>
-        <p style="margin-top: 40px; color: #aaa; font-size: 0.85rem;">
-            © 2026 Bún Sao Mai. All Right Reversed.
-        </p>
+        <a href="tel:0865617979" class="float-btn float-phone">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+    </div>
+
+    <header id="siteHeader">
+        <div class="container nav-content">
+            <a href="#" class="logo">SAO<span>MAI</span></a>
+            <ul class="menu-links">
+                <li><a href="#about">Câu chuyện</a></li>
+                <li><a href="#menu">Thực đơn</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+            <div style="font-weight: 800; font-size: 0.7rem; color: #bbb;">HOTLINE: 086.561.7979</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section" id="about">
+            <div class="container">
+                <div class="hero-label">Đặc sản biển Thanh Hóa</div>
+                <h1>Hải Sản Tươi Ngon<br>Chuẩn Vị Sao Mai.</h1>
+                <p>Nằm tại trung tâm Khu đô thị Sao Mai, chúng tôi tự hào mang đến trải nghiệm ẩm thực bún hải sản tinh túy với nguồn nguyên liệu tươi sống nhập mới mỗi ngày.</p>
+            </div>
+        </section>
+
+        <section class="container bento-container" id="menu">
+            <div class="bento-grid">
+                
+                <div class="bento-item grid-2x2" onclick="openDish(0)">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=1200&q=80" alt="Bún hải sản thập cẩm">
+                    </div>
+                    <div class="item-info">
+                        <span class="item-tag">Món ký danh</span>
+                        <h2 class="item-title" style="font-size: 3.8rem;">Bún Hải Sản<br>Thập Cẩm</h2>
+                        <p class="item-desc">Đầy đủ tôm đại sú, mực ống, bề bề và chả mực giã tay thủ công.</p>
+                    </div>
+                </div>
+
+                <div class="bento-item grid-1x2">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1559742811-822873691df0?auto=format&fit=crop&w=800&q=80" alt="Nguyên liệu tươi">
+                    </div>
+                    <div class="item-info">
+                        <span class="item-tag">Cam kết</span>
+                        <h2 class="item-title">Hải Sản<br>Tươi Sống</h2>
+                        <p class="item-desc">Nguyên liệu được chọn lọc kỹ lưỡng từ bến cảng mỗi 5 giờ sáng.</p>
+                    </div>
+                </div>
+
+                <div class="bento-item" onclick="openDish(2)">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1596797038530-2c39fa81b487?auto=format&fit=crop&w=800&q=80" alt="Bún riêu cua">
+                    </div>
+                    <div class="item-info">
+                        <span class="item-tag">Đậm đà</span>
+                        <h2 class="item-title">Bún Riêu<br>Cua Đồng</h2>
+                        <p class="item-desc">Gạch cua nguyên chất, giã tay tạo nên vị ngọt thanh khiết.</p>
+                    </div>
+                </div>
+
+                <div class="bento-item" onclick="openDish(3)">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80" alt="Bún cá cay">
+                    </div>
+                    <div class="item-info">
+                        <span class="item-tag">Cay nồng</span>
+                        <h2 class="item-title">Bún Cá<br>Cay Giòn</h2>
+                        <p class="item-desc">Cá phi lê chiên vàng rụm, giòn tan cùng nước dùng cay tê.</p>
+                    </div>
+                </div>
+
+                <div class="bento-item grid-2x1" style="background-color: var(--primary-color);">
+                    <div class="item-info">
+                        <span class="item-tag" style="color: white;">Ghé thăm ngay</span>
+                        <h2 class="item-title" style="font-size: 2.8rem;">KĐT SAO MAI, NGỌC ĐÀ</h2>
+                        <p class="item-desc" style="opacity: 1;">Xã Thọ Phú, Thanh Hóa - Không gian sang trọng, phục vụ tận tình.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div class="dish-modal" id="dishModal">
+        <div class="modal-card">
+            <span class="modal-close" onclick="closeDish()">&times;</span>
+            <span class="item-tag">Thông tin món ăn</span>
+            <h2 id="mTitle" class="item-title" style="font-size: 3.5rem; color: var(--dark-color); margin: 20px 0;"></h2>
+            <p id="mDesc" style="font-size: 1.2rem; color: var(--gray-text); line-height: 2; margin-bottom: 40px;"></p>
+            <div style="padding-top: 30px; border-top: 1px solid var(--gray-medium);">
+                <p style="font-weight: 800; color: var(--primary-color);">HOTLINE ĐẶT MÓN: 086.561.7979</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-wrap">
+                <div class="footer-brand">
+                    <a href="#" class="logo" style="color: white; margin-bottom: 25px; display: block;">SAO<span>MAI</span></a>
+                    <p>Tinh hoa bún hải sản Thanh Hóa. Chúng tôi tự hào phục vụ thực khách những bát bún ngon nhất với sự tận tâm tuyệt đối.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 class="footer-heading">Thực đơn</h4>
+                    <ul class="footer-contact-list">
+                        <li>Bún hải sản thập cẩm</li>
+                        <li>Bún riêu cua đồng</li>
+                        <li>Bún cá cay giòn</li>
+                        <li>Nước giải khát</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4 class="footer-heading">Thông tin liên hệ</h4>
+                    <ul class="footer-contact-list">
+                        <li><i class="fas fa-map-marker-alt"></i> Đường đôi, Khu đô thị Sao Mai, Thôn Ngọc Đà, Xã Thọ Phú, Thanh Hóa</li>
+                        <li><i class="fas fa-phone-alt"></i> 086.561.7979</li>
+                        <li><i class="fas fa-envelope"></i> vuongdd.duong@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 SAO MAI SEAFOOD CULINARY. ALL RIGHTS RESERVED.</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="https://www.facebook.com/profile.php?id=61588461264138" style="color: #555; text-decoration: none;">FACEBOOK</a>
+                    <span>INSTAGRAM</span>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
+        // 1. Dữ liệu đồng bộ (Ảnh nào - Tên đó)
+        const menuData = [
+            {
+                title: "Bún Hải Sản Thập Cẩm",
+                desc: "Món ăn đặc sắc nhất của quán với sự kết hợp của tôm đại sú biển, mực tươi, bề bề và chả mực giã tay chuẩn vị. Nước dùng được hầm từ xương tôm và xương ống suốt 12 tiếng tạo vị ngọt sâu và thanh khiết."
+            },
+            {
+                title: "Hải Sản Tươi Sống",
+                desc: "Chúng tôi không bao giờ thỏa hiệp với chất lượng. Mọi nguyên liệu hải sản tại Sao Mai đều được kiểm duyệt gắt gao và nhập mới theo ngày để giữ trọn vẹn hương vị đại dương."
+            },
+            {
+                title: "Bún Riêu Cua Đồng",
+                desc: "Hương vị truyền thống đậm đà với gạch cua đồng 100% nguyên chất. Ăn kèm cùng tóp mỡ thơm nức, hành phi tự làm và rau sống tươi sạch, mang lại cảm giác bình dị mà sang trọng."
+            },
+            {
+                title: "Bún Cá Cay Giòn",
+                desc: "Từng miếng phi lê cá được tẩm ướp kỳ công và chiên ở nhiệt độ cao để đạt độ giòn hoàn hảo bên ngoài nhưng vẫn mềm ẩm bên trong. Nước dùng cay nồng kích thích vị giác."
+            }
+        ];
+
+        // 2. Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('siteHeader');
+            if (window.scrollY > 100) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
         });
+
+        // 3. Modal Logic (Đảm bảo khớp nội dung)
+        const modal = document.getElementById('dishModal');
+        const mTitle = document.getElementById('mTitle');
+        const mDesc = document.getElementById('mDesc');
+
+        function openDish(id) {
+            mTitle.innerText = menuData[id].title;
+            mDesc.innerText = menuData[id].desc;
+            modal.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDish() {
+            modal.classList.remove('is-active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Đóng modal khi click ra ngoài
+        window.onclick = (e) => {
+            if (e.target == modal) closeDish();
+        }
+
+        // 4. Image Fallback (Xử lý nếu link ảnh từ Unsplash bị lỗi)
+        document.querySelectorAll('.item-image img').forEach(img => {
+            img.onerror = function() {
+                this.style.display = 'none';
+                this.parentElement.style.backgroundColor = "#222";
+                this.parentElement.innerHTML += `
+                    <div style="height:100%; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.05); font-weight:900; font-size:4rem;">
+                        SAO MAI
+                    </div>
+                `;
+            };
+        });
+
+        console.log("Hệ thống Sao Mai Seafood đã đồng bộ dữ liệu thành công.");
     </script>
 </body>
 </html>
